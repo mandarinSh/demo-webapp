@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pet } from '../pet';
+import { PetsService } from '../pets.service';
 
 @Component({
   selector: 'app-pets',
@@ -7,21 +8,18 @@ import { Pet } from '../pet';
   styleUrls: ['./pets.component.css']
 })
 export class PetsComponent implements OnInit {
-  dog = 'Zeus';
+  // dog = 'Zeus';
 
-  dogs?: Pet[];
+  dogs: Pet[] = [];
 
-  selectedDog?: Pet;
-
-  constructor() {
-
-  }
+  constructor(private service: PetsService) { }
 
   ngOnInit(): void {
+    this.getDogs();
   }
 
-  onSelectDog(dog: Pet): void {
-    this.selectedDog = dog;
+  getDogs(): void {
+    this.service.getDogs()
+      .subscribe(dogs => this.dogs = dogs);
   }
-
 }
